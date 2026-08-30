@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · Sistema de Clínica</title>
+  <link rel="stylesheet" href="/static/estilos.css" />
+</head>
+<body class="pagina-dashboard">
+  <header class="encabezado">
+    <div>
+      <h1>Panel de Clínica</h1>
+      <p class="subtitulo">Sesión: {{ nombre_usuario }}</p>
+    </div>
+    <button id="boton-salir" class="boton-secundario">Cerrar sesión</button>
+  </header>
+
+  <section class="tarjetas-resumen" id="tarjetas-resumen">
+    <article class="tarjeta">
+      <span class="numero" id="dato-pacientes">-</span>
+      <span class="etiqueta">Pacientes</span>
+    </article>
+    <article class="tarjeta">
+      <span class="numero" id="dato-doctores">-</span>
+      <span class="etiqueta">Doctores</span>
+    </article>
+    <article class="tarjeta">
+      <span class="numero" id="dato-citas-pendientes">-</span>
+      <span class="etiqueta">Citas pendientes</span>
+    </article>
+    <article class="tarjeta">
+      <span class="numero" id="dato-consultas">-</span>
+      <span class="etiqueta">Consultas realizadas</span>
+    </article>
+  </section>
+
+  <main class="contenido-principal">
+
+    <!-- ================= CITAS ================= -->
+    <section class="panel">
+      <h2>Agendar cita</h2>
+      <form id="formulario-cita" class="formulario-en-linea">
+        <select id="cita-paciente" required></select>
+        <select id="cita-doctor" required></select>
+        <input type="date" id="cita-fecha" required />
+        <input type="time" id="cita-hora" required />
+        <input type="text" id="cita-motivo" placeholder="Motivo de la consulta" required />
+        <button type="submit">Agendar</button>
+      </form>
+      <p id="mensaje-cita" class="mensaje-error" hidden></p>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>Doctor</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Motivo</th>
+            <th>Estado</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla-citas">
+          <tr><td colspan="7">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= CONSULTAS ================= -->
+    <section class="panel">
+      <h2>Registrar consulta (atender una cita pendiente)</h2>
+      <form id="formulario-consulta" class="formulario-vertical">
+        <select id="consulta-cita" required></select>
+        <input type="text" id="consulta-diagnostico" placeholder="Diagnóstico" required />
+        <input type="text" id="consulta-tratamiento" placeholder="Tratamiento" required />
+        <input type="text" id="consulta-notas" placeholder="Notas (opcional)" />
+        <button type="submit">Registrar consulta</button>
+      </form>
+      <p id="mensaje-consulta" class="mensaje-error" hidden></p>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Paciente</th>
+            <th>Doctor</th>
+            <th>Diagnóstico</th>
+            <th>Tratamiento</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla-consultas">
+          <tr><td colspan="5">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= RECETAS ================= -->
+    <section class="panel">
+      <h2>Recetar medicamento</h2>
+      <form id="formulario-receta" class="formulario-en-linea">
+        <select id="receta-consulta" required></select>
+        <select id="receta-medicamento" required></select>
+        <input type="text" id="receta-dosis" placeholder="Dosis (ej. 500mg cada 8h)" required />
+        <input type="number" id="receta-cantidad" placeholder="Cantidad" min="1" required />
+        <input type="text" id="receta-indicaciones" placeholder="Indicaciones (opcional)" />
+        <button type="submit">Recetar</button>
+      </form>
+      <p id="mensaje-receta" class="mensaje-error" hidden></p>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Consulta</th>
+            <th>Medicamento</th>
+            <th>Dosis</th>
+            <th>Cantidad</th>
+            <th>Indicaciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla-recetas">
+          <tr><td colspan="5">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================= PACIENTES Y DOCTORES ================= -->
+    <section class="panel panel-doble">
+      <div>
+        <h2>Registrar paciente</h2>
+        <form id="formulario-paciente" class="formulario-vertical">
+          <input type="text" id="p-nombre" placeholder="Nombre completo" required />
+          <input type="text" id="p-identidad" placeholder="Número de identidad" required />
+          <input type="text" id="p-telefono" placeholder="Teléfono" required />
+          <input type="email" id="p-correo" placeholder="Correo" required />
+          <input type="number" id="p-edad" placeholder="Edad" min="0" max="120" required />
+          <button type="submit">Guardar paciente</button>
+        </form>
+        <p id="mensaje-paciente" class="mensaje-error" hidden></p>
+      </div>
+
+      <div>
+        <h2>Registrar doctor</h2>
+        <form id="formulario-doctor" class="formulario-vertical">
+          <input type="text" id="d-nombre" placeholder="Nombre completo" required />
+          <input type="text" id="d-colegiacion" placeholder="No. de colegiación" required />
+          <input type="text" id="d-especialidad" placeholder="Especialidad" required />
+          <input type="text" id="d-telefono" placeholder="Teléfono" required />
+          <input type="email" id="d-correo" placeholder="Correo" required />
+          <button type="submit">Guardar doctor</button>
+        </form>
+        <p id="mensaje-doctor" class="mensaje-error" hidden></p>
+      </div>
+    </section>
+
+    <!-- ================= MEDICAMENTOS ================= -->
+    <section class="panel">
+      <h2>Registrar medicamento</h2>
+      <form id="formulario-medicamento" class="formulario-en-linea">
+        <input type="text" id="m-nombre" placeholder="Nombre" required />
+        <input type="text" id="m-presentacion" placeholder="Presentación (ej. Tableta 500mg)" required />
+        <input type="number" id="m-stock" placeholder="Stock" min="0" required />
+        <button type="submit">Guardar medicamento</button>
+      </form>
+      <p id="mensaje-medicamento" class="mensaje-error" hidden></p>
+
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Presentación</th>
+            <th>Stock</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla-medicamentos">
+          <tr><td colspan="3">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

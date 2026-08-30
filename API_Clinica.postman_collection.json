@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "API de Clínica - Programación II",
+    "description": "Login + CRUD de pacientes, doctores, citas, consultas, medicamentos y recetas (FastAPI + SQLite)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const datos = pm.response.json();",
+              "if (datos.token) {",
+              "    pm.collectionVariables.set('token', datos.token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre_usuario\": \"admin\",\n  \"contrasena\": \"admin123\"\n}"
+        },
+        "url": "{{base_url}}/auth/login"
+      }
+    },
+    {
+      "name": "2. Ver mi usuario",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/auth/yo"
+      }
+    },
+    {
+      "name": "3. Registrar paciente",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Ana Martínez\",\n  \"identidad\": \"0801-2000-12345\",\n  \"telefono\": \"9999-9999\",\n  \"correo\": \"ana@example.com\",\n  \"edad\": 28\n}"
+        },
+        "url": "{{base_url}}/pacientes"
+      }
+    },
+    {
+      "name": "4. Listar pacientes",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/pacientes"
+      }
+    },
+    {
+      "name": "5. Registrar doctor",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Dr. Carlos Reyes\",\n  \"colegiacion\": \"12345\",\n  \"especialidad\": \"Medicina General\",\n  \"telefono\": \"8888-8888\",\n  \"correo\": \"carlos.reyes@example.com\"\n}"
+        },
+        "url": "{{base_url}}/doctores"
+      }
+    },
+    {
+      "name": "6. Listar doctores",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/doctores"
+      }
+    },
+    {
+      "name": "7. Agendar cita",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"paciente_id\": 1,\n  \"doctor_id\": 1,\n  \"fecha\": \"2026-09-01\",\n  \"hora\": \"09:00\",\n  \"motivo\": \"Dolor de cabeza persistente\"\n}"
+        },
+        "url": "{{base_url}}/citas"
+      }
+    },
+    {
+      "name": "8. Listar citas",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/citas"
+      }
+    },
+    {
+      "name": "9. Registrar consulta (atender cita)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cita_id\": 1,\n  \"diagnostico\": \"Migraña tensional\",\n  \"tratamiento\": \"Reposo e hidratación\",\n  \"notas\": \"Reevaluar en una semana\"\n}"
+        },
+        "url": "{{base_url}}/consultas"
+      }
+    },
+    {
+      "name": "10. Listar consultas",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/consultas"
+      }
+    },
+    {
+      "name": "11. Registrar medicamento",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Paracetamol\",\n  \"presentacion\": \"Tableta 500mg\",\n  \"stock\": 100\n}"
+        },
+        "url": "{{base_url}}/medicamentos"
+      }
+    },
+    {
+      "name": "12. Listar medicamentos",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/medicamentos"
+      }
+    },
+    {
+      "name": "13. Recetar medicamento",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"consulta_id\": 1,\n  \"medicamento_id\": 1,\n  \"dosis\": \"500mg cada 8 horas\",\n  \"cantidad\": 10,\n  \"indicaciones\": \"Tomar después de alimentos\"\n}"
+        },
+        "url": "{{base_url}}/recetas"
+      }
+    },
+    {
+      "name": "14. Listar recetas",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/recetas"
+      }
+    },
+    {
+      "name": "15. Resumen del dashboard",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/dashboard/resumen"
+      }
+    },
+    {
+      "name": "16. Cancelar cita (ID 2)",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/citas/2"
+      }
+    },
+    {
+      "name": "17. Cerrar sesión",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{base_url}}/auth/logout"
+      }
+    }
+  ]
+}

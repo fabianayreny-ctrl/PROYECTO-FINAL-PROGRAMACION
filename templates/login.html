@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar sesión · Sistema de Clínica</title>
+  <link rel="stylesheet" href="/static/estilos.css" />
+</head>
+<body class="pagina-login">
+  <main class="tarjeta-login">
+    <h1>Sistema de Clínica</h1>
+    <p class="subtitulo">Programación II</p>
+
+    <form id="formulario-login">
+      <label for="nombre_usuario">Usuario</label>
+      <input type="text" id="nombre_usuario" name="nombre_usuario" required autofocus />
+
+      <label for="contrasena">Contraseña</label>
+      <input type="password" id="contrasena" name="contrasena" required />
+
+      <button type="submit">Iniciar sesión</button>
+    </form>
+
+    <p id="mensaje-error" class="mensaje-error" hidden></p>
+
+    <p class="ayuda">
+      Usuario de prueba creado automáticamente: <code>admin</code> / <code>admin123</code>
+    </p>
+  </main>
+
+  <script src="/static/app.js"></script>
+  <script>
+    const formulario = document.getElementById("formulario-login");
+    const mensajeError = document.getElementById("mensaje-error");
+
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      mensajeError.hidden = true;
+
+      const datos = {
+        nombre_usuario: document.getElementById("nombre_usuario").value,
+        contrasena: document.getElementById("contrasena").value,
+      };
+
+      try {
+        const respuesta = await fetch("/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos),
+        });
+
+        if (!respuesta.ok) {
+          const error = await respuesta.json();
+          mensajeError.textContent = error.detail || "No se pudo iniciar sesión";
+          mensajeError.hidden = false;
+          return;
+        }
+
+        // El servidor ya dejó una cookie de sesión; solo falta redirigir.
+        window.location.href = "/dashboard";
+      } catch (error) {
+        mensajeError.textContent = "No se pudo conectar con la API";
+        mensajeError.hidden = false;
+      }
+    });
+  </script>
+</body>
+</html>

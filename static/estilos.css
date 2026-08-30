@@ -1,0 +1,250 @@
+:root {
+  --azul: #2563eb;
+  --azul-oscuro: #1e40af;
+  --gris-fondo: #f3f4f6;
+  --gris-borde: #d1d5db;
+  --texto: #1f2937;
+  --verde: #16a34a;
+  --rojo: #dc2626;
+  --amarillo: #d97706;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+}
+
+/* ---------- Login ---------- */
+
+.pagina-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarjeta-login {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+}
+
+.tarjeta-login h1 {
+  margin-bottom: 0.25rem;
+  font-size: 1.4rem;
+}
+
+.subtitulo {
+  color: #6b7280;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.tarjeta-login form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.35rem;
+}
+
+.tarjeta-login label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.ayuda {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* ---------- Controles generales ---------- */
+
+input,
+select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--azul);
+  color: white;
+  margin-top: 0.75rem;
+}
+
+button:hover {
+  background: var(--azul-oscuro);
+}
+
+.boton-secundario {
+  background: transparent;
+  color: var(--texto);
+  border: 1px solid var(--gris-borde);
+  margin-top: 0;
+}
+
+.boton-secundario:hover {
+  background: #e5e7eb;
+}
+
+.boton-pequeno {
+  margin-top: 0;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: var(--rojo);
+}
+
+.boton-pequeno:hover {
+  background: #b91c1c;
+}
+
+.mensaje-error {
+  color: var(--rojo);
+  background: #fee2e2;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+/* ---------- Dashboard ---------- */
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--gris-borde);
+}
+
+.encabezado h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.tarjetas-resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem 2rem 0;
+}
+
+.tarjeta {
+  background: white;
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.tarjeta .numero {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--azul);
+}
+
+.tarjeta .etiqueta {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.contenido-principal {
+  padding: 1.5rem 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.panel-doble {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.formulario-en-linea {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.formulario-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.25rem;
+}
+
+.tabla th,
+.tabla td {
+  text-align: left;
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--gris-borde);
+  font-size: 0.9rem;
+}
+
+.etiqueta-estado {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.etiqueta-pendiente {
+  background: #fef3c7;
+  color: var(--amarillo);
+}
+
+.etiqueta-atendida {
+  background: #dcfce7;
+  color: var(--verde);
+}
+
+.etiqueta-cancelada {
+  background: #fee2e2;
+  color: var(--rojo);
+}
+
+@media (max-width: 720px) {
+  .panel-doble {
+    grid-template-columns: 1fr;
+  }
+}
